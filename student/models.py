@@ -6,7 +6,10 @@ from django.http import HttpResponse
 
 class Clas(models.Model):
     name = models.CharField(max_length=32, verbose_name="班级名称")
-
+    credit = models.IntegerField(verbose_name="学分", default=2)
+    teacher = models.CharField(max_length=30, null=True)
+    classTime = models.CharField(max_length=20, null=True)
+    classAddr = models.CharField(max_length=40, null=True)
     class Meta:
         db_table = "db_class"
 
