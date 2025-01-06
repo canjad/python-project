@@ -1,0 +1,82 @@
+{% extends "student/base.html" %}
+{% block content %}
+      <section class="forms">
+        <div class="container-fluid">
+            <!-- Page Header-->
+            <header>
+                <h1 class="h3 display">编辑学生 </h1>
+            </header>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center">
+                            <h4>编辑学生</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>edit student</p>
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label>姓名</label>
+                                    <input type="text" value="{{ edit_stu.name }}" placeholder="name" class="form-control" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label>年龄</label>
+                                    <input type="text" value="{{ edit_stu.age }}" placeholder="age" class="form-control" name="age">
+                                </div>
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <select name="sex">
+                                    {% if edit_stu.sex == 1 %}
+                                        <option value="1" selected>男</option>
+                                        <option value="0">女</option>
+                                        <option value="2">保密</option>
+                                        {% elif edit_stu.sex == 0 %}
+                                         <option value="1" >男</option>
+                                        <option value="0" selected>女</option>
+                                        <option value="2">保密</option>
+                                        {% else %}
+                                        <option value="1" >男</option>
+                                        <option value="0" >女</option>
+                                        <option value="2" selected>保密</option>
+                                    {% endif %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>生日日期</label>
+                                    <input type="date" value="{{ edit_stu.birthday |date:"Y-m-d" }}" placeholder="birthday" class="form-control" name="birthday">
+                                </div>
+                              <div class="form-group">
+                                    <label>班级</label>
+                                    <select name="clas_id">
+                                        {% for clas in class_list %}
+                                            {% if clas == edit_stu.clas %}
+                                                <option selected value="{{ clas.id }}">{{ clas.name }}</option>
+                                                {% else %}
+                                                <option value="{{ clas.id }}">{{ clas.name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                             <div class="form-group">
+                                    <label>选修课程</label>
+                                    <select name="course_id_list" multiple size="5">
+                                        {% for course in course_list %}
+                                            {% if course in edit_stu.courses.all %}
+                                                <option selected value="{{ course.id }}">{{ course.title }}</option>
+                                                {% else %}
+                                                <option value="{{ course.id }}">{{ course.title }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="提交" class="btn btn-primary">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
