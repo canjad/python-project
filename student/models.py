@@ -6,17 +6,17 @@ from django.http import HttpResponse
 
 class Clas(models.Model):
     name = models.CharField(max_length=32, verbose_name="班级名称")
-    credit = models.IntegerField(verbose_name="学分", default=2)
-    teacher = models.CharField(max_length=30, null=True)
-    classTime = models.CharField(max_length=20, null=True)
-    classAddr = models.CharField(max_length=40, null=True)
+
     class Meta:
         db_table = "db_class"
 
 
 class Course(models.Model):
     title = models.CharField(max_length=32, verbose_name="课程名称")
-    credit = models.SmallIntegerField()
+    credit = models.IntegerField(verbose_name="学分", default=2)
+    teacher = models.CharField(max_length=30, null=True)
+    classTime = models.CharField(max_length=20, null=True)
+    classAddr = models.CharField(max_length=40, null=True)
     # students = models.ManyToManyField("Student",db_table="db_student2course")
     class Meta:
         db_table = "db_course"
@@ -25,6 +25,28 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+
+from django.contrib.auth.models import AbstractUser
+import os
+
+
+def user_directory_path(instance, filename):
+    return os.path.join(instance.username, "avatars", filename)
+
+
+class UserInfo(AbstractUser):
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name="custom_userinfo_groups",  # 设置唯一的 related_name
+        blank=True
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name="custom_userinfo_permissions",  # 设置唯一的 related_name
+        blank=True
+    )
+    avatar = models.ImageField(upload_to=user_directory_path,default="/avatar/default.png")
+    stu = models.OneToOneField("Student", on_delete=models.CASCADE,null=True)
 
 class Student(models.Model):
 

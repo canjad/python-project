@@ -9,7 +9,21 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <a href="/student/add/" class="btn btn-primary">添加学生</a>
+                <div class="row">
+                     <div class="col-md-2"><a href="/student/add/" class="btn btn-primary">添加学生</a></div>
+                    <div class="col-md-6">
+                        
+                         <form class="row" action="/student/search/" method="get">
+                             <input type="text" class="form-control col-md-4" name="key_word" placeholder="{{ key_word }}">
+                             <select name="cate" class="form-control col-md-2" >
+                                 <option value="name"> 姓名</option>
+                                 <option value="class"> 班级</option>
+                             </select>
+                             <input type="submit" value="提交" class="btn-success">
+                         </form>
+                    </div>
+                </div>
+               
                     <table class="table table-striped">
                         <thead>
                         <tr>
